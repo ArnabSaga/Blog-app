@@ -6,8 +6,8 @@ import auth, { UserRole } from '../../middleware/auth';
 
 const router = express.Router();
 
-router.post("/", auth(UserRole.USER), PostController.createPost);
+router.get("/", PostController.getAllPosts);
 
-router.get("/", PostController.getPosts);
+router.post("/", auth(UserRole.USER), PostController.createPost);
 
 export const PostRouter: Router = router;

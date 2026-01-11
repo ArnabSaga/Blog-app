@@ -21,9 +21,9 @@ const createPost = async (req: Request, res: Response) => {
   }
 };
 
-const getPosts = async (req: Request, res: Response) => {
+const getAllPosts = async (req: Request, res: Response) => {
   try {
-    const result = await PostService.getPosts();
+    const result = await PostService.getAllPosts();
     res.status(200).json(result);
   } catch (error: any) {
     res.status(400).json({
@@ -35,5 +35,5 @@ const getPosts = async (req: Request, res: Response) => {
 
 export const PostController = {
   createPost,
-  getPosts,
+  getAllPosts,
 };
