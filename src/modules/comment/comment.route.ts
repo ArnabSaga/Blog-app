@@ -4,6 +4,8 @@ import auth, { UserRole } from "../../middleware/auth";
 
 const router = express.Router();
 
+router.get("/:commentId", CommentController.getCommentById);
+
 router.post(
   "/",
   auth(UserRole.USER, UserRole.ADMIN),
