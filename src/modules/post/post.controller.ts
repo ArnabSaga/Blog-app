@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 
 import { PostService } from "./post.service";
 
@@ -8,7 +8,7 @@ import paginationSortingHelper from "../../helpers/paginationSortingHelper";
 
 import { UserRole } from "../../middleware/auth";
 
-const createPost = async (req: Request, res: Response) => {
+const createPost = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const user = req.user;
     if (!user) {
@@ -19,11 +19,8 @@ const createPost = async (req: Request, res: Response) => {
 
     const result = await PostService.createPost(req.body, user.id as string);
     res.status(201).json(result);
-  } catch (error: any) {
-    res.status(400).json({
-      error: "Post Creation Failed",
-      details: error,
-    });
+  } catch (error) {
+    next(error);
   }
 };
 

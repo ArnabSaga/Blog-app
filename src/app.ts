@@ -2,10 +2,14 @@ import express, { Application, Request, Response } from "express";
 import cors from "cors";
 
 import { toNodeHandler } from "better-auth/node";
+
 import { auth } from "./lib/auth";
 
 import { PostRouter } from "./modules/post/post.route";
+
 import { CommentRouter } from "./modules/comment/comment.route";
+
+import globalErrorHandler from "./middleware/globalErrorHandler";
 
 const app: Application = express();
 
@@ -27,5 +31,7 @@ app.use("/api/v1/comments", CommentRouter);
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello Prisma World");
 });
+
+app.use(globalErrorHandler);
 
 export default app;
