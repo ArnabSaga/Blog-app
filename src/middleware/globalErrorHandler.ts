@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 
 import { Prisma } from "../../generated/prisma/client";
+import { PrismaClientInitializationError } from "@prisma/client/runtime/client";
 
 function globalErrorHandler(
   err: any,
@@ -33,6 +34,22 @@ function globalErrorHandler(
     } else if (err.code === "P2003") {
       statusCode = 400;
       errorMessage = "Foreign key constraint failed on the field";
+    }
+  }
+  //! PrismaClientUnknownRequestError
+  else if (err instanceof Prisma.PrismaClientUnknownRequestError) {
+    statusCode = 500;
+    errorMessage = "Error occurred during query execution";
+  }
+
+  //! PrismaClientInitializationError
+  else if (err instanceof PrismaClientInitializationError) {
+    if (err.errorCode === "P1000") {
+      statusCode = 401;
+      errorMessage = "Authentication failed. Please check your creditials";
+    } else if (err.errorCode === "P1001") {
+      statusCode = 400;
+      errorMessage = "Can not reach database server";
     }
   }
 
