@@ -28,7 +28,7 @@ model Post {
   comments   Comment[]
 
   @@index([authorId])
-  @@map("Posts")
+  @@map("posts")
 }
 
 model Comment {
@@ -46,7 +46,7 @@ model Comment {
 
   @@index([postId])
   @@index([authorId])
-  @@map("Comments")
+  @@map("comments")
 }
 
 enum PostStatus {
